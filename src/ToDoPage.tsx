@@ -6,7 +6,8 @@ import {
     createTodo,
     toggleAllTodos,
     deleteAllTodos,
-    updateTodoStatus
+    updateTodoStatus,
+    deleteTodo
 } from './store/actions';
 import Service from './service';
 import {TodoStatus} from './models/todo';
@@ -22,7 +23,6 @@ const ToDoPage = () => {
     useEffect(()=>{
         (async ()=>{
             const resp = await Service.getTodos();
-
             dispatch(setTodos(resp || []));
         })()
     }, [])
@@ -31,6 +31,7 @@ const ToDoPage = () => {
         if (e.key === 'Enter' ) {
             const resp = await Service.createTodo(inputRef.current.value);
             dispatch(createTodo(resp));
+            inputRef.current.value = ''
         }
     }
 
@@ -46,6 +47,10 @@ const ToDoPage = () => {
         dispatch(deleteAllTodos());
     }
 
+    const onDeleteTodo = (todoId: any) => {
+        dispatch(deleteTodo(todoId));
+    }
+
 
     return (
         <div className="ToDo__container">
@@ -54,7 +59,7 @@ const ToDoPage = () => {
                     ref={inputRef}
                     className="Todo__input"
                     placeholder="What need to be done?"
-                    onKeyDown={onCreateTodo}
+                    onKeyUp={onCreateTodo}
                 />
             </div>
             <div className="ToDo__list">
@@ -68,7 +73,7 @@ const ToDoPage = () => {
                                     onChange={(e) => onUpdateTodoStatus(e, index)}
                                 />
                                 <span>{todo.content}</span>
-                                <button
+                                <button onClick={() => onDeleteTodo(todo.id)}
                                     className="Todo__delete"
                                 >
                                     X

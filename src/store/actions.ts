@@ -29,7 +29,7 @@ export interface CreateTodoAction {
 export function createTodo(newTodo: Todo): CreateTodoAction {
   return {
     type: CREATE_TODO,
-    payload: newTodo
+    payload: newTodo 
   }
 }
 
