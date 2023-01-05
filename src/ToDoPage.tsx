@@ -23,10 +23,8 @@ const ToDoPage = () => {
 		(async () => {
 			const localTodos = localStorage.getItem("todos");
 			const data = localTodos !== null ? JSON.parse(localTodos) : [];
-            //console.log(data);
 			const resp = await Service.getTodos(data);
-            // console.log(resp);
-			dispatch(setTodos(data));
+			dispatch(setTodos(resp));
 		})();
 	}, []);
 
@@ -46,7 +44,6 @@ const ToDoPage = () => {
 	};
 
 	const onToggleAllTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
-        
 		dispatch(toggleAllTodos(e.target.checked));
 	};
 
@@ -95,15 +92,24 @@ const ToDoPage = () => {
 					<div />
 				)}
 				<div className="Todo__tabs">
-					{/* <button className="Action__btn" onClick={() => onToggleAllTodo}>
-                        All
-                    </button>
-                    <button className="Action__btn" onClick={()=>setShowing(TodoStatus.ACTIVE)}>
-                        Active
-                    </button>
-                    <button className="Action__btn" onClick={()=>setShowing(TodoStatus.COMPLETED)}>
-                        Completed
-                    </button> */}
+					{/* <button
+						className="Action__btn"
+						onClick={() => onToggleAllTodo}
+					>
+						All
+					</button> */}
+					<button
+						className="Action__btn"
+						onClick={() => setShowing(TodoStatus.ACTIVE)}
+					>
+						Active
+					</button>
+					<button
+						className="Action__btn"
+						onClick={() => setShowing(TodoStatus.COMPLETED)}
+					>
+						Completed
+					</button>
 				</div>
 				<button className="Action__btn" onClick={onDeleteAllTodo}>
 					Clear all todos

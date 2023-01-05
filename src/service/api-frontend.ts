@@ -14,9 +14,7 @@ class ApiFrontend extends IAPI {
 	}
 
 	async getTodos(todos: Array<Todo>): Promise<Todo[]> {
-		return [
-			todos
-		];
+		return todos
 	}
 }
 
